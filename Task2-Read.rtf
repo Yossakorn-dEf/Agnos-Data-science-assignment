@@ -1,0 +1,77 @@
+{\rtf1\ansi\ansicpg874\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #  Task 2: AI Symptom Recommender\
+\
+This folder contains the implementation of a symptom recommendation system using a dataset of patient-reported symptoms.  \
+The goal is to recommend likely co-occurring symptoms based on a user\'92s input (gender, age, and initial symptoms).\
+\
+---\
+\
+##  Project Structure\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Task2/\
+\uc0\u9500 \u9472 \u9472  data/\
+\uc0\u9474  \u9492 \u9472 \u9472  ai_symptom_picker.csv # Patient dataset (not included if proprietary)\
+\uc0\u9474 \
+\uc0\u9500 \u9472 \u9472  notebooks/\
+\uc0\u9474  \u9492 \u9472 \u9472  symptom_recommender.ipynb # Main notebook with full pipeline (Steps 1\'9612)\
+\uc0\u9474 \
+\uc0\u9500 \u9472 \u9472  results/\
+\uc0\u9474  \u9500 \u9472 \u9472  evaluation_metrics.json # Evaluation results (Precision@K, Recall@K, MAP@K, Coverage)\
+\uc0\u9474  \u9492 \u9472 \u9472  top_symptoms.png # Visualization of frequent symptoms\
+\uc0\u9474 \
+\uc0\u9500 \u9472 \u9472  config.json\
+\uc0\u9500 \u9472 \u9472  priors.json\
+\uc0\u9500 \u9472 \u9472  cooccur.npy\
+\uc0\u9500 \u9472 \u9472  jaccard.npy\
+\uc0\u9500 \u9472 \u9472  lift.npy\
+\uc0\u9500 \u9472 \u9472  support_counts.npy\
+\uc0\u9500 \u9472 \u9472  symptom_vocab.json\
+\uc0\u9474 \
+\uc0\u9500 \u9472 \u9472  requirements.txt # Dependencies\
+\uc0\u9492 \u9472 \u9472  README.md # Documentation (this file)\
+\
+\
+---\
+\
+##  Workflow Overview\
+\
+The system is organized into 12 main steps\
+\
+1. Load dataset (`ai_symptom_picker.csv`)  \
+2. Data preprocessing (cleaning, normalization, handling missing values)  \
+3. Calculate symptom co-occurrence matrix  \
+4. Compute rule-based association scores (Support, Confidence, Lift)  \
+5. KNN-based similarity scoring (Jaccard index between patient symptom sets)  \
+6. Estimate prior probabilities (Bayesian priors using demographics: gender, age)  \
+7. Final scoring function (weighted combination of rules + KNN + priors)  \
+8. Evaluation  \
+   - Metrics: Precision@K, Recall@K, MAP@K, Coverage  \
+   - Strategies: Leave-One-Out (LOO) & Train/Test Split  \
+9. Save artifacts (co-occurrence, priors, evaluation results)  \
+10. Reload artifacts (for reproducibility)  \
+11. Build `recommend()` function (returns top-K symptoms with explanation)  \
+12. Demo & Evaluation reporting (interactive input + visualization)  \
+\
+---\
+\
+\
+##  Example Evaluation Results\
+\
+```json\
+\{\
+  "Precision@K": 0.8054,\
+  "Recall@K": 0.8054,\
+  "MAP@K": 0.5791,\
+  "Coverage": 0.5281,\
+  "EvaluatedPairs": 185\
+\}\
+}
